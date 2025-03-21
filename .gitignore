@@ -41,13 +41,6 @@ env/
 .spyderproject
 .spyproject
 
-# Data files
-*.csv
-*.xlsx
-*.xls
-*.db
-*.sqlite3
-
 # Images and outputs
 visualizations/
 *.png

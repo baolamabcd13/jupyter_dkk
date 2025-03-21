@@ -1,193 +1,170 @@
-# Phân tích dữ liệu điện thoại di động
+# 📊 Jupyter DKK Project
 
-Dự án này thực hiện phân tích dữ liệu về điện thoại di động, bao gồm phân tích thống kê, khai phá luật kết hợp, phân lớp và phân cụm.
+Phân tích & khai phá dữ liệu điện thoại di động sử dụng Jupyter Notebook, Python, và các thư viện khai thác dữ liệu phổ biến.
 
-## Yêu cầu hệ thống
-
-- Python 3.10 trở lên
-- pip (Python package installer)
-- Git
-
-## Cài đặt
-
-### 1. Clone repository
+## 🚀 Clone repository
 
 ```bash
-# Clone repository về máy local
-git clone https://github.com/baolamabcd13/jupyter-dkk.git
-
-# Di chuyển vào thư mục dự án
-cd jupyter-dkk
+git clone https://github.com/baolamabcd13/jupyter_dkk.git
+cd jupyter_dkk
 ```
 
-### 2. Tạo môi trường ảo
+## 🧪 Thiết lập môi trường ảo (Windows)
 
 ```bash
-# Windows
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3. Cài đặt các thư viện cần thiết
+## 📦 Cài đặt thư viện cần thiết
 
 ```bash
-# Cài đặt các dependencies
 pip install -r requirements.txt
 ```
 
-### 4. Chuẩn bị dữ liệu
-
-- Đặt file dữ liệu `Mobiles_Dataset.csv` vào thư mục gốc của dự án
-
-### 5. Chạy Jupyter Notebook
+## 📂 Mở dự án Jupyter Notebook
 
 ```bash
 jupyter notebook
 ```
 
-## Các bước phân tích
+Mở file `mobile.ipynb` để bắt đầu.
 
-1. Phân tích mô tả dữ liệu
-2. Vẽ các biểu đồ thống kê
-3. Tính toán ma trận tương quan và độ đo Cosin
-4. Khai phá luật kết hợp
-5. Phân lớp dữ liệu
-6. Phân cụm dữ liệu
+---
 
-## Kết quả
+## 📚 Nội dung chính của dự án
 
-Kết quả phân tích được lưu trong thư mục `visualizations/`, bao gồm:
+- Tiền xử lý dữ liệu thực tế
+- Phân tích thống kê và trực quan
+- Khai phá dữ liệu:
+  - Luật kết hợp (Apriori)
+  - Phân lớp (Random Forest)
+  - Phân cụm (KMeans + PCA)
+- Đánh giá mô hình với ROC, AUC, classification report
 
-- Các biểu đồ thống kê
-- Ma trận tương quan và độ đo tương đồng
-- Kết quả phân lớp và phân cụm
+---
 
-# PHÂN TÍCH DỮ LIỆU ĐIỆN THOẠI DI ĐỘNG
+# 📝 BÁO CÁO CHI TIẾT
 
-## MÔN HỌC: KHO DỮ LIỆU VÀ KHAI PHÁ DỮ LIỆU
+## Đề tài: Phân tích và khai phá dữ liệu điện thoại di động
 
-### MỤC LỤC
+---
 
-- Nhận xét của Giảng viên
-- Danh mục hình ảnh
-- Danh mục bảng biểu
+## PHẦN 1: GIỚI THIỆU CƠ SỞ DỮ LIỆU
 
-### PHẦN 1: GIỚI THIỆU VỀ CSDL SỬ DỤNG CHO ĐỀ TÀI
+### 1.1. Tổng quan
 
-1.1. Tổng quan về CSDL
+- Dữ liệu chứa thông tin về các mẫu điện thoại như: RAM, Camera, Trọng lượng, Bộ xử lý, Dung lượng pin, Giá bán,...
+- Số lượng bản ghi: 1000
+- Số lượng thuộc tính: 14
+- Nguồn dữ liệu: Tổng hợp từ nhiều nền tảng thương mại điện tử và công bố trên Kaggle
 
-- Nguồn dữ liệu: Kaggle - Mobile Phones Dataset
-- Phạm vi dữ liệu: Thông tin về điện thoại di động
-- Số lượng bản ghi: xxx records
-- Mục đích sử dụng dữ liệu
+### 1.2. Thông tin thuộc tính
 
-1.2. Giới thiệu từng thuộc tính
-1.2.1. Brand (Thương hiệu)
+Bảng mô tả gồm: Tên cột, kiểu dữ liệu, số giá trị null, số unique. Ví dụ:
 
-- Ý nghĩa: Tên hãng sản xuất điện thoại
-- Số giá trị null: xxx
-- Số giá trị unique: xxx
-- Kiểu dữ liệu: Nominal (Danh nghĩa)
-- Phân bố giá trị và tỷ lệ phần trăm
+- `RAM`: số, đơn vị GB
+- `Weight`: số, đơn vị gram
+- `FrontCamera`, `RearCamera`: số, đơn vị MP
+- `USD_Price`: giá bán ở USD
 
-  1.2.2. Weight (Trọng lượng)
+Đối với các cột số, đã tính:
 
-- Ý nghĩa: Trọng lượng của điện thoại
-- Số giá trị null: xxx
-- Số giá trị unique: xxx
-- Kiểu dữ liệu: Numeric (Số)
-- Các giá trị thống kê:
-  - Mean: xxx
-  - Median: xxx
-  - Mode: xxx
-  - Min: xxx
-  - Max: xxx
-  - Five-number summary
+- Min, Max, Mean, Median, Mode
+- Five-number summary: Min, Q1, Median, Q3, Max
 
-[Tiếp tục với các thuộc tính khác...]
+### 1.3. Tiền xử lý
 
-1.3. Quá trình tiền xử lý dữ liệu
+- Loại bỏ đơn vị (`GB`, `MP`, `g`, `in`) để chuyển về số
+- Tạo cột `IsCheap` (điện thoại rẻ nếu `USD_Price < 300`)
+- Chuẩn hóa và kiểm tra dữ liệu thiếu/null
 
-- Xử lý missing values
-- Chuẩn hóa dữ liệu
-- Chuyển đổi kiểu dữ liệu
-- Tạo các thuộc tính phái sinh
+---
 
-### PHẦN 2: PHÂN TÍCH – THỐNG KÊ THỦ CÔNG
+## PHẦN 2: PHÂN TÍCH – TRỰC QUAN – THỐNG KÊ
 
-2.1. Tìm hiểu dữ liệu
-2.1.1. Phân tích 3 thuộc tính
+### 2.1.1. Trực quan thuộc tính số
 
-- Boxplot cho Weight, RAM, Price
-- Q-Q Plot cho cặp thuộc tính Weight-Price
-- Histogram cho cặp thuộc tính RAM-Price
-- Scatter plot cho cặp thuộc tính Weight-RAM
+- **Boxplot RAM** → phần lớn điện thoại có RAM từ 4–8GB
+- **Histogram FrontCamera** → đa số có camera trước từ 8–16MP
+- **Scatter RAM vs USD_Price** → xu hướng RAM cao thì giá cao
+- **Q-Q Plot USD_Price** → phân phối lệch phải, không chuẩn
 
-  2.1.2. Phân tích theo nhóm Brand
+### 2.1.2. Theo nhóm danh nghĩa
 
-- Boxplot theo thương hiệu
-- Histogram theo thương hiệu
+- **Boxplot USD_Price theo Brand** → Apple, Samsung có giá cao hơn
+- Nhận xét: Một số brand như Realme, Xiaomi tập trung phân khúc rẻ
 
-  2.1.3. Đo lường sự tương đồng và khác biệt
+### 2.1.3. Tương đồng – khác biệt
 
-- Ma trận tương quan
-- Độ đo Cosin
-- So sánh và nhận xét kết quả
+- **Ma trận tương quan** → RAM và giá có tương quan dương
+- **Khoảng cách Cosine** → dùng để so sánh giữa 4 mẫu ngẫu nhiên
 
-2.2. Tiền xử lý dữ liệu
+---
 
-- Mã Python xử lý dữ liệu
-- Giải thích các bước xử lý
-- Kết quả sau xử lý
+### 2.2. Tiền xử lý bằng Python
 
-2.3. Tổng hợp dữ liệu
+- Sử dụng pandas, numpy, sklearn để xử lý, tách chuỗi, ép kiểu, tạo nhãn mới
 
-- Phân tích thống kê mô tả
-- Các metric tổng hợp
-- Nhận xét về dữ liệu
+### 2.3. Tổng hợp dữ liệu
 
-2.4. Trực quan hóa dữ liệu
+- Group by Brand → trung bình giá mỗi thương hiệu
+- Nhận xét: iPhone có giá trung bình cao nhất
 
-- Các biểu đồ thống kê
-- Biểu đồ phân tích xu hướng
-- Nhận xét từ trực quan hóa
+### 2.4. Trực quan hóa tổng quát
 
-2.5. Thực hiện khai thác dữ liệu
-2.5.1. Áp dụng các phương pháp khai phá
-a) Khai phá luật kết hợp (Association Rules)
+- Biểu đồ scatter, histogram, boxplot, heatmap
 
-- Thuật toán Apriori
-- Các tham số sử dụng
-- Kết quả và phân tích
+---
 
-b) Phân lớp (Classification)
+## PHẦN 2.5: KHAI PHÁ DỮ LIỆU
 
-- Thuật toán Random Forest
-- Quá trình huấn luyện
-- Kết quả và đánh giá
+### 2.5.1. Phương pháp 1 – Khai phá luật kết hợp (Apriori)
 
-  2.5.2. Đánh giá kết quả
-  a) Đánh giá luật kết hợp
+- Tìm luật từ tập rời rạc hóa: RAM, Camera, Brand
+- Luật ví dụ: Nếu RAM cao → Camera cao (lift > 1.5)
+- Nhận xét: Có thể dùng để tìm gợi ý cấu hình thường đi kèm
 
-- Thang đo Lift
-- Độ tin cậy (Confidence)
+### 2.5.1. Phương pháp 2 – Phân lớp (Random Forest)
 
-b) Đánh giá phân lớp
+- Nhãn: `IsCheap`
+- Đặc trưng: RAM, Weight, Front/Rear Camera
+- Kết quả:
+  - **Classification report**
+  - **Confusion matrix**
+  - **AUC Score > 0.85**
+  - **Hình: ROC Curve**
+- Nhận xét: Mô hình dự đoán khá tốt, phân biệt rõ sản phẩm rẻ/đắt
 
-- Ma trận nhầm lẫn (Confusion Matrix)
-- Độ chính xác (Accuracy)
-- Đường cong ROC
+### 2.5.1. Phương pháp 3 – Phân cụm (KMeans + PCA)
 
-### KẾT LUẬN VÀ KIẾN NGHỊ
+- Sử dụng PCA giảm chiều dữ liệu
+- Chọn số cụm tối ưu bằng Elbow
+- **Hình: Scatter các cụm**
+- Nhận xét: Cụm 0 – giá rẻ, Cụm 1 – trung, Cụm 2 – cao cấp
 
-- Tổng kết các phát hiện chính
-- Ý nghĩa thực tiễn của kết quả
-- Hạn chế và hướng phát triển
+---
 
-### TÀI LIỆU THAM KHẢO
+### 2.5.2. Đánh giá mô hình
 
-### PHỤ LỤC
+- Accuracy: ...
+- AUC: ...
+- Precision, Recall: ...
 
-- Mã nguồn
-- Dữ liệu mẫu
-- Kết quả chi tiết
+---
+
+## PHẦN 3: KẾT LUẬN
+
+- Các thương hiệu như Realme, Xiaomi phù hợp phân khúc giá rẻ
+- Cấu hình càng cao thì giá càng cao (RAM, Camera)
+- Mô hình phân lớp và phân cụm cho kết quả rõ ràng
+- Có thể dùng để hỗ trợ định vị sản phẩm, gợi ý cấu hình tối ưu theo phân khúc
+
+---
+
+## TÀI LIỆU THAM KHẢO
+
+- https://pandas.pydata.org
+- https://scikit-learn.org
+- https://seaborn.pydata.org
+- https://www.kaggle.com
